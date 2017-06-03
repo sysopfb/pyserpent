@@ -2973,9 +2973,9 @@ assert '\xde&\x9f\xf83\xe42\xb8[.\x88\xd2p\x1c\xe7\\' == Serpent(__testkey).encr
 assert __testdat == Serpent(__testkey).decrypt('\xde&\x9f\xf83\xe42\xb8[.\x88\xd2p\x1c\xe7\\')
 
 #CBC Encrypt - Jason Reaves
-def serpent_cbc_encrypt(key, data):
+def serpent_cbc_encrypt(key, data, iv='\x00'*16):
     out = ""
-    last = '\x00'*16
+    last = iv
     for i in range((len(data)/16)):
         temp = data[i*16:(i+1)*16]
         to_encode = ""
@@ -2989,9 +2989,9 @@ def serpent_cbc_encrypt(key, data):
     return out
 
 #CBC Decrypt - Jason Reaves
-def serpent_cbc_decrypt(key,data):
+def serpent_cbc_decrypt(key,data,iv='\x00'*16):
     out2 = ""
-    last = '\x00'*16
+    last = iv
     for i in range((len(data)/16)):
         temp = Serpent(key).decrypt(data[i*16:(i+1)*16])
         to_decode = ""
